@@ -1,0 +1,113 @@
+SQL> ED;
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  V_Sample1 NUMBER(2) :=60;
+  3  V_Sample2 CONSTANT NUMBER(2):=20;
+  4  V_Sample3 NUMBER(2) NOT NULL:=5;
+  5  V_Sample4 NUMBER(2) := 50;
+  6  V_Sample5 NUMBER(2) DEFAULT 25;
+  7  BEGIN
+  8  DBMS_OUTPUT.PUT_LINE(V_SAMPLE1);
+  9* END;
+SQL> /
+60
+
+PL/SQL procedure successfully completed.
+
+SQL> ed;
+Wrote file afiedt.buf
+
+  1  <<outer>>
+  2  DECLARE --outer block
+  3  var_num1 NUMBER := 5;
+  4  BEGIN
+  5  <<inner>>
+  6  DECLARE --inner block
+  7  var_num1 NUMBER := 10;
+  8  BEGIN
+  9  DBMS_OUTPUT.PUT_LINE('Value for var_num1:' ||var_num1);
+ 10  DBMS_OUTPUT.PUT_LINE('Value for var_num1:' ||outer.var_num1);
+ 11  --Can outer block variable (var_num1) be printed here.IfYes,Print the same.
+ 12  END;
+ 13  --Can inner block variable(var_num1) be printed here.IfYes,Print the same.
+ 14* END;
+SQL> /
+Value for var_num1:10
+Value for var_num1:5
+
+PL/SQL procedure successfully completed.
+
+SQL> ed;
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  Employee_details emp%ROWTYPE;
+  3  BEGIN
+  4  select * into employee_details from emp where empno=7369;
+  5  DBMS_OUTPUT.PUT_LINE(EMPLOYEE_DETAILS.empno|| '|' ||EMPLOYEE_DETAILS.ename|| '|' ||EMPLOYEE_DETAILS.job|| '|' ||EMPLOYEE_DETAILS.mgr|| '|' ||
+  6  EMPLOYEE_DETAILS.hiredate|| '|' ||EMPLOYEE_DETAILS.sal|| '|' ||EMPLOYEE_DETAILS.comm|| '|' ||EMPLOYEE_DETAILS.deptno);
+  7* END;
+SQL> /
+7369|SMITH|CLERK|7902|17-DEC-80|800||20
+
+PL/SQL procedure successfully completed.
+
+
+SQL> ed;
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  no number(10);
+  3  name varchar(15);
+  4  job varchar(15);
+  5  manager varchar(15);
+  6  hdate varchar(15);
+  7  salary varchar(15);
+  8  commission number(15);
+  9  deptnum number(20);
+ 10  deptname varchar(20);
+ 11  BEGIN
+ 12  name:='&name';
+ 13  DBMS_OUTPUT.PUT_LINE('employee name is'||name);
+ 14  SELECT empno,ename,job,mgr,hiredate,sal,comm,deptno,dept_name
+ 15  INTO no,name,job,manager,hdate,salary,commission,deptnum,deptname
+ 16  FROM emp ,department_master
+ 17  WHERE deptno=dept_code and ename=name;
+ 18  DBMS_OUTPUT.PUT_LINE(no|| '| '||name||' | '||job||'| '||manager||' |'||hdate||' |'||salary||'| '||commission||' |'||deptnum||' |'||deptname);
+ 19* END;
+SQL> /
+Enter value for name: ford
+old  12: name:='&name';
+new  12: name:='ford';
+employee name isford
+7902| FORD |ANALYST |7566 |03-DEC-81|3000 |20 | Electricals
+
+PL/SQL procedure successfully completed.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  DECLARE
+  2  V_BONUS STAFF_MASTER.STAFF_SAL%TYPE;
+  3  V_SAL STAFF_MASTER.STAFF_SAL%TYPE;
+  4  BEGIN
+  5  FOR C IN(
+  6  SELECT STAFF_SAL INTO V_SAL
+  7  FROM STAFF_MASTER
+  8  WHERE MGR_CODE=100006)
+  9  LOOP
+ 10  V_SAL:=C.STAFF_SAL;
+ 11  END LOOP;
+ 12  V_BONUS:=V_SAL*2;
+ 13  DBMS_OUTPUT.PUT_LINE('STAFF SALARY IS ' || V_SAL);
+ 14  DBMS_OUTPUT.PUT_LINE('STAFF BONUS IS ' || V_BONUS);
+ 15  EXCEPTION
+ 16  WHEN NO_DATA_FOUND THEN
+ 17  DBMS_OUTPUT.PUT_LINE('GIVEN CODE IS NOT VALID.ENTER VALID CODE');
+ 18* END;
+SQL> /
+STAFF SALARY IS 22000
+STAFF BONUS IS 44000
+
+PL/SQL procedure successfully completed.
