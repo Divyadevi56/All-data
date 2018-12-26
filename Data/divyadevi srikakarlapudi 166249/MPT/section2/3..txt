@@ -1,0 +1,3 @@
+SQL> insert into employees(employee_code,employee_name,date_of_joining,employee_salary,grade) values(empcode_seq.NEXTVAL,'divya',sysdate,1250,'A');
+
+1 row created.

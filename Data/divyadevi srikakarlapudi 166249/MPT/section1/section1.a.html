@@ -1,0 +1,29 @@
+<html>
+<head>
+
+<script>
+function incometax()
+{
+r=document.getElementById("r").value;
+if(r<=180000)
+{
+document.write("nill");
+}
+else if(r>180000&&r<=300000)
+{
+document.write(0.1*r);
+}
+else if(r>300000 && r<=500000)
+{
+document.write(0.2*r);
+}
+else
+{
+document.write(0.3*r);
+}
+a.innerhtml=("income tax is"+r);
+}
+</head>
+<body>
+</body>
+</html>

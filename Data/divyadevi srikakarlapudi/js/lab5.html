@@ -1,0 +1,46 @@
+<html>
+ <head>
+ <title> window example </title>
+ </head> 
+ <script> 
+ var width=document.getElementById("Width");
+ var height=document.getElementById("height");
+ var left=document.getElementById("left");
+ var top=document.getElementById("top");
+ function nwindow() 
+ {
+ var x=window.open(x,"_blank");
+ x.document.write("width= "+width+"<br>"+" height= "+height+"<br>"+" left= "+left+"<br>"+" top= "+top+"<br>");
+  }
+ </script> 
+ <body > 
+ <form id="frmlab">
+ <table border="1" cellspacing="8" cellpadding="10" bordercolor="blue">
+ <tr>
+ <td colspan="2" align="center"> Window Size</td>
+ </tr>
+ <tr>
+ <td>Width</td>
+ <td><input id="width"></td>
+ <td>Height:</td>
+ <td><input id="height"></td>
+ </tr>
+  <tr>
+ <td colspan="2" align="center"> Position</td>
+ </tr>
+ <tr>
+ <td>Left</td>
+ <td><input id="left"></td>
+ <td>Top:</td>
+ <td><input id="top"></td>
+ </tr>
+ <tr>
+ <td colspan="3" align="center">
+ <button onclick="nwindow()">New Window</button></td>
+ <td align="center">
+ <button onclick="reset()"> Reset</button></td>
+ </tr>
+ </table>
+ </form>
+ </body>
+ </html>

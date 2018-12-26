@@ -1,0 +1,23 @@
+<html>
+<body>
+<script>
+document.write("-------------------------------------------<br>");
+document.write("*******Calculate Compound Interest*********<br>");
+document.write("-------------------------------------------<br>");
+var p=1000;
+var r=10;
+var n=1;
+function CompoundInterest(p,r,n)
+{
+var t=parseFloat(1+parseFloat(r/100));
+var t1=Math.pow(t,n)*p;
+var c=t1-p;
+document.write("Principle-"+p);
+document.write("<br>Rate of interest-"+r);
+document.write("<br>Period-"+n+ "yr");
+document.write("<br>Comp interest"+c);
+}
+CompoundInterest(p,r,n);
+</script>
+</body>
+</html>

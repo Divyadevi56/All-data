@@ -1,0 +1,8 @@
+SQL> ed;
+Wrote file afiedt.buf
+
+  1  UPDATE EMPLOYEES SET employee_salary=((employee_salary*110)/100) WHERE employee_code IN (select employee_code from employees
+  2* where ((SYSDATE-date_of_joining)/365)>5)
+SQL> /
+
+7 rows updated.

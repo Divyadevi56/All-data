@@ -1,0 +1,146 @@
+SQL> drop table employees;
+drop table employees
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> drop table salgrade;
+drop table salgrade
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+
+SQL> CREATE TABLE salgrade
+  2  (grade char(2) PRIMARY KEY,
+  3  minsal Number,maxsal number);
+
+Table created.
+
+SQL> ed;
+Wrote file afiedt.buf
+
+  1* CREATE TABLE EMPLOYEES(employee_code number,constraint pk primary key(employee_code),employee_name varchar2(15),date_of_joining date,employee_salary number,grade char(2),constraint cid foreign key(grade) references salgrade(grade))
+SQL> /
+
+Table created.
+
+SQL> insert into salgrade values('A',10000,20000);
+
+1 row created.
+
+SQL> insert into salgrade values('B',20001,40001);
+
+1 row created.
+
+SQL> insert into salgrade values('C',40001,60000);
+
+1 row created.
+
+SQL> INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade');
+Enter value for employee_code: 101
+Enter value for employee_name: preetham
+Enter value for date_of_joining: 10-jan-2010
+Enter value for salary: 18000
+Enter value for grade: A
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(101,'preetham','10-jan-2010',18000,'A')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 102
+Enter value for employee_name: Aakash
+Enter value for date_of_joining: 10-nov-2005
+Enter value for salary: 48000
+Enter value for grade: C
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(102,'Aakash','10-nov-2005',48000,'C')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 103
+Enter value for employee_name: kishore
+Enter value for date_of_joining: 19-dec-2011
+Enter value for salary: 21000
+Enter value for grade: B
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(103,'kishore','19-dec-2011',21000,'B')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 104
+Enter value for employee_name: reena
+Enter value for date_of_joining: 23-jun-2006
+Enter value for salary: 42000
+Enter value for grade: C
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(104,'reena','23-jun-2006',42000,'C')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 105
+Enter value for employee_name: kailash
+Enter value for date_of_joining: 5-feb-2004
+Enter value for salary: 46000
+Enter value for grade: C
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(105,'kailash','5-feb-2004',46000,'C')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 106
+Enter value for employee_name: sahana
+Enter value for date_of_joining: 18-nov-2003
+Enter value for salary: 52000
+Enter value for grade: C
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(106,'sahana','18-nov-2003',52000,'C')
+
+1 row created.
+
+SQL> /
+Enter value for employee_code: 107
+Enter value for employee_name: keerthana
+Enter value for date_of_joining: 25-jul-2006
+Enter value for salary: 27000
+Enter value for grade: B
+old   1: INSERT INTO employees values(&employee_code,'&employee_name','&date_of_joining',&salary,'&grade')
+new   1: INSERT INTO employees values(107,'keerthana','25-jul-2006',27000,'B')
+
+1 row created.
+
+  1      CREATE OR REPLACE PROCEDURE EMP
+  2      AS
+  3      EMP_COD EMPLOYEES.EMPLOYEE_CODE%TYPE;
+  4      EMP_NAM EMPLOYEES.EMPLOYEE_NAME%TYPE;
+  5      EMP_SAL EMPLOYEES.SALARY%TYPE;
+  6      SAL_G SALGRADE.GRADE%TYPE;
+  7      MIN_SAL SALGRADE.MINSAL%TYPE;
+  8      MAX_SAL SALGRADE.MAXSAL%TYPE;
+  9      BEGIN
+ 10  V_EMP='&EMPLOYEE_CODE';
+ 11      FOR A_Q IN ( SELECT E.EMPLOYEE_CODE,E.EMPLOYEE_NAME,E.SALARY,S.GRADE,S.MINSAL,S.MAXSAL INTO V_EMPNO,V_ENAME,V_SAL,V_GRADE,V_MINSAL,V_MAXSAL FROM EMPLOYEES E,SALGRADE S
+ 12    WHERE E.GARDE="A";
+ 13     LOOP
+ 14     EMP_COD:=A_Q.EMPLOYEE_CODE;
+ 15     EMP_NAM:=A_Q.EMPLOYEE_NAME;
+ 16     EMP_SAL:=A_Q.SALARY;
+ 17     SAL_G:=A_Q.GRADE;
+ 18     MIN_SAL:=A_Q.MINSAL;
+ 19     MAX_SAL:=A_Q.MAXSAL;
+ 20     END LOOP;
+ 21     DBMS_OUTPUT.PUT_LINE('EMPNO'||E.EMPLOYEE_CODE||'EMPNAME'||E.EMPLOYEE_NAME||'SALARY'||E.SALARY||'GRADE'||S.GRADE||'MINSAL'||S.MINSAL||'MAXSAL'||S.MINSAL);
+ 22*   END;
+ 23  /
+Enter value for employee_code: 103
+old  10: V_EMP='&EMPLOYEE_CODE';
+new  10: V_EMP='103';
+EMPNO 103 EMPNAMEKISHORE SALARY 21000 GRADE B MINSAL20001 MAXSAL 40000
+
